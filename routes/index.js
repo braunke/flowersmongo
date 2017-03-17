@@ -35,4 +35,5 @@ router.get('/details/:flower', function(req, res, next){
         return res.render('flower_details', { 'flower' : doc });
     });
 });
+
 module.exports = router;
