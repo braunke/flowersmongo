@@ -19,6 +19,7 @@ router.get('/', function(req, res, next){
             if (err) {
                 return next(err);
             }
+            console.log('docs');
             return res.render('all_flowers', {'flowers': docs, 'colors': colorDocs});
         });
     }
@@ -35,5 +36,14 @@ router.get('/details/:flower', function(req, res, next){
         return res.render('flower_details', { 'flower' : doc });
     });
 });
+router.post('/addFlower', function(req, res, next){
+    req.db.collection('flowers').insertOne(req.body, function(err){
+        if (err) {
+            return next(err);
+        }
+        return res.redirect('/');
+    });
+});
+
 
 module.exports = router;
