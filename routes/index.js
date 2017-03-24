@@ -57,6 +57,15 @@ router.put('/updateColor', function(req, res, next) {
         return res.send({'color' : req.body.color})
     })
 });
-
+//deletes flower from database
+router.post('/deleteFlower', function(req, res, next){
+    console.log("gf");
+    req.db.collection('flowers').remove(req.body, function(err){
+        if (err){
+            return next(err);
+        }
+        return res.redirect('/');
+    })
+});
 
 module.exports = router;
