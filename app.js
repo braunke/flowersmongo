@@ -13,15 +13,15 @@ var users = require('./routes/users');
 
 var app = express();
 
-
-var url = 'mongodb://localhost:27017/garden';
+var mongo_pw = process.env.MONGO_PW;
+var url = 'mongodb://localhost:27017/garden'
 MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     console.log('connected to MongoDB');
 
 // view engine setup
     app.set('views', path.join(__dirname, 'views'));
-    app.engine('.hbs', hbs({extname: '.hbs'}));
+    app.engine('.hbs', hbs({extname: '.hbs', defaultLayout:'layout'}));
     app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
