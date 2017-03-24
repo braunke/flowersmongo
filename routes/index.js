@@ -36,14 +36,26 @@ router.get('/details/:flower', function(req, res, next){
         return res.render('flower_details', { 'flower' : doc });
     });
 });
+//checks database for flower name, if it exists already will take them to an error page, if not will add it to the database
 router.post('/addFlower', function(req, res, next){
-    req.db.collection('flowers').insertOne(req.body, function(err){
-        if (err) {
+    //just grabs the name to look through database
+    req.db.collection('flowers').findOne({name: req.body.name}, function(err, flower){
+        if (err){
             return next(err);
         }
-        return res.redirect('/');
+        if (flower){
+            return res.render('message', {"message":"That flower is already in the database, enter a different one"});
+        }
+        req.db.collection('flowers').insertOne(req.body, function(err){
+            if (err) {
+                return next(err);
+            }
+            return res.redirect('/');
+        });
     });
+
 });
+
 router.put('/updateColor', function(req, res, next) {
 
     var filter = { 'name' : req.body.name };
@@ -59,7 +71,7 @@ router.put('/updateColor', function(req, res, next) {
 });
 //deletes flower from database
 router.post('/deleteFlower', function(req, res, next){
-    console.log("gf");
+
     req.db.collection('flowers').remove(req.body, function(err){
         if (err){
             return next(err);
