@@ -19,7 +19,7 @@ router.get('/', function(req, res, next){
             if (err) {
                 return next(err);
             }
-            console.log('docs');
+
             return res.render('all_flowers', {'flowers': docs, 'colors': colorDocs});
         });
     }
