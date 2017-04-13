@@ -18,6 +18,7 @@ var mongo_user = process.env.MONGO_USER;
 var schoolUrl = 'mongodb://localhost:27017/garden';
 var homeUrl = 'mongodb://' + mongo_user + ':' + mongo_pw + '@localhost:27017/garden';
 var url = process.env.MONGO_URL;
+console.log(url);
 MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     console.log('connected to MongoDB');
